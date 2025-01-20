@@ -29,11 +29,11 @@ jobs:
           sudo apt-get install -y docker-compose
           docker-compose --version
 
-      # Docker should be running automatically; no need to start manually
-      # Just ensure Docker is functional
+      # This step is to verify if Docker is accessible
       - name: Check Docker Daemon
         run: |
-          docker info
+          sudo docker version
+          sudo docker info
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
