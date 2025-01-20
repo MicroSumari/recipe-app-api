@@ -31,15 +31,6 @@ jobs:
 
       # Skip the manual Docker start
       # Docker is already running with the above service definition
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Verify Buildx setup
-        run: |
-          docker buildx version
-          docker buildx ls
-
       - name: Build and run tests
         run: docker-compose run --rm app sh -c "python manage.py test"
 
