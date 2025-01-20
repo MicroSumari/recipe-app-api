@@ -34,6 +34,7 @@ jobs:
 
       - name: Ensure Docker is available
         run: |
+          sudo systemctl start docker
           docker info
 
       - name: Build and run tests
