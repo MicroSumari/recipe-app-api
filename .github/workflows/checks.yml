@@ -29,13 +29,13 @@ jobs:
           sudo apt-get install -y docker-compose
           docker-compose --version
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Ensure Docker is available
+      - name: Start Docker
         run: |
           sudo systemctl start docker
-          docker info
+          sudo docker info
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build and run tests
         run: docker-compose run --rm app sh -c "python manage.py test"
