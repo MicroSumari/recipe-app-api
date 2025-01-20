@@ -29,12 +29,8 @@ jobs:
           sudo apt-get install -y docker-compose
           docker-compose --version
 
-      - name: Start Docker
-        run: |
-          sudo systemctl start docker
-          sudo docker info
-
-      # Check if Docker daemon is accessible
+      # Docker should be running automatically; no need to start manually
+      # Just ensure Docker is functional
       - name: Check Docker Daemon
         run: |
           docker info
@@ -42,7 +38,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      # Verify Buildx setup only if Docker is working
       - name: Verify Buildx setup
         run: |
           docker buildx version
