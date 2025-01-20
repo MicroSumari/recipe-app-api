@@ -7,6 +7,13 @@ jobs:
     name: Test and lint
     runs-on: ubuntu-20.04
 
+    services:
+      docker:
+        image: docker:19.03.12-dind  # This will start Docker in Docker
+        options: --privileged         # Required for DinD to work
+        ports:
+          - 2375:2375                # Exposing the Docker daemon port
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -14,7 +21,7 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-docker@v2
         with:
-          version: '20.10.16'  # Use latest supported Docker version
+          version: '20.10.16'  # Use the latest supported Docker version
           docker-compose-version: '1.29.2'  # Ensure Docker Compose is available
 
       - name: Login to Dockerhub
