@@ -10,9 +10,11 @@ jobs:
     services:
       docker:
         image: docker:19.03.12-dind  # Docker in Docker image
-        options: --privileged         # Grant necessary privileges for DinD
+        options: --privileged         # Necessary for DinD
         ports:
           - 2375:2375                # Expose Docker port
+        env:
+          DOCKER_TLS_CERTDIR: ""      # Disable TLS for Docker daemon to avoid errors with DinD
 
     steps:
       - name: Checkout
@@ -35,11 +37,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Verify Docker and Docker Compose
       - name: Verify Docker and Docker Compose
         run: |
           docker --version
           docker-compose --version
+
+      - name: Set Docker Host Environment
+        run: echo "DOCKER_HOST=tcp://localhost:2375" >> $GITHUB_ENV
 
       - name: Build and run tests
         run: docker-compose run --rm app sh -c "python manage.py test"
