@@ -13,3 +13,4 @@ class CalcTests(SimpleTestCase):
         """test number add together"""
         res = calc.add(4, 5)
         self.assertEqual(res,9)
+    
